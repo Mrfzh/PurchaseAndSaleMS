@@ -1,6 +1,7 @@
 package com.feng.purchaseandsalems.view;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -101,17 +102,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 mPasswordEt.getText().toString(), new LoginListener() {
                     @Override
                     public void loginSuccess() {
-                        // 登录成功
-                        mLoginPb.setVisibility(View.GONE);
-                        showShortToast("登录成功");
-                        finish();
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                // 登录成功
+                                mLoginPb.setVisibility(View.GONE);
+                                showShortToast("登录成功");
+                                finish();
+                            }
+                        });
                     }
 
                     @Override
-                    public void loginError(String errorMsg) {
-                        // 登录失败
-                        mLoginPb.setVisibility(View.GONE);
-                        showShortToast(errorMsg);
+                    public void loginError(final String errorMsg) {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                // 登录失败
+                                mLoginPb.setVisibility(View.GONE);
+                                showShortToast(errorMsg);
+                            }
+                        });
                     }
                 });
     }

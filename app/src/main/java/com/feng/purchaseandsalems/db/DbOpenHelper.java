@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.feng.purchaseandsalems.constant.UserInfo;
+import com.feng.purchaseandsalems.entity.User;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 
@@ -70,25 +72,27 @@ public class DbOpenHelper {
                 } catch (MySQLNonTransientConnectionException e) {
                     Log.d(TAG, "MySQLNonTransientConnectionException: " + e.getMessage());
                     e.printStackTrace();
-                    errorMsg = "该用户不存在";
+                    errorMsg = "数据库连接失败，可能该用户不存在";
                 } catch (SQLException e) {
                     Log.d(TAG, "SQLException: " + e.getMessage());
                     e.printStackTrace();
                 }
 
-                final String fErrorMsg = errorMsg;
-
-                // 切回主线程
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (sConnection != null) {
-                            loginListener.loginSuccess();
-                        } else {
-                            loginListener.loginError(fErrorMsg);
-                        }
+                if (sConnection != null) {
+                    // 获取用户类型
+                    String type = DbOperation.getUserType(getMainConnection(), user);
+                    if (type.equals("")) {
+                        loginListener.loginError("连接数据库失败");
+                        return;
                     }
-                });
+                    // 将用户信息写入 UserInfo
+                    UserInfo.setUser(new User(user, type));
+                    // 登陆成功
+                    loginListener.loginSuccess();
+                } else {
+                    loginListener.loginError(errorMsg);
+                }
+
             }
         }).start();
     }

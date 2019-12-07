@@ -136,8 +136,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     @Override
                     public void run() {
                         mRegisterPb.setVisibility(View.GONE);
-                        showShortToast("注册成功，请进行登录");
-                        jumpToNewActivity(LoginActivity.class);
+                        showShortToast("注册成功");
                         finish();
                     }
                 });
