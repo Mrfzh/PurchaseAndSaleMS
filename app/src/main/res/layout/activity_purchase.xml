@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.PurchaseActivity">
+
+    <!-- title bar -->
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_purchase_back"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/back"
+        android:padding="18dp"/>
+
+    <TextView
+        android:id="@+id/tv_purchase_title"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="进货模块"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        app:layout_constraintStart_toEndOf="@id/iv_purchase_back"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"/>
+
+    <!-- function -->
+
+    <Button
+        android:id="@+id/btn_purchase_insert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_purchase_back"
+        android:text="插入进货信息"/>
+
+    <Button
+        android:id="@+id/btn_purchase_delete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_purchase_insert"
+        android:text="删除进货信息"/>
+
+    <Button
+        android:id="@+id/btn_purchase_alter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_purchase_delete"
+        android:text="更改进货信息"/>
+
+    <Button
+        android:id="@+id/btn_purchase_query"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_purchase_alter"
+        android:text="查询进货信息"/>
+
+</android.support.constraint.ConstraintLayout>

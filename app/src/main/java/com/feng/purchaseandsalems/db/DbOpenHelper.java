@@ -100,7 +100,7 @@ public class DbOpenHelper {
     /**
      * 连接用户数据库
      */
-    public static Connection getConnection() {
+    public static Connection getUserConnection() {
         return sConnection;
     }
 

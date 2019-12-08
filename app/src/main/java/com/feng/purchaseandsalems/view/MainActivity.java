@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 if (!checkPurchase()) {
                     break;
                 }
-                showShortToast("进入进货模块");
+                jumpToNewActivity(PurchaseActivity.class);
                 break;
             case R.id.btn_main_stock_module:
                 // 库存模块

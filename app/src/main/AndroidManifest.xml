@@ -14,7 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.RegisterActivity"></activity>
+        <activity android:name=".view.AutopartsInsertActivity"></activity>
+        <activity android:name=".view.PurchaseInsertActivity" />
+        <activity android:name=".view.PurchaseActivity" />
+        <activity android:name=".view.RegisterActivity" />
         <activity android:name=".view.LoginActivity" />
         <activity android:name=".view.MainActivity">
             <intent-filter>

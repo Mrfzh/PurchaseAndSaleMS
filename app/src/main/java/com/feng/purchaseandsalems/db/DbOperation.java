@@ -225,7 +225,7 @@ public class DbOperation {
     /**
      * 获取用户类型
      */
-    public static String getUserType(Connection connection, String userName) {
+    static String getUserType(Connection connection, String userName) {
         String type = "";
         // 查询的 sql 语句
         String sql = "select * from user where name = ?";
