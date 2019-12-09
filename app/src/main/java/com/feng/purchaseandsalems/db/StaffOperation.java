@@ -1,9 +1,7 @@
 package com.feng.purchaseandsalems.db;
 
-import android.util.Log;
-
 import com.feng.purchaseandsalems.entity.AutopartsData;
-import com.feng.purchaseandsalems.entity.PurchaseData;
+import com.feng.purchaseandsalems.entity.StaffData;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,16 +10,16 @@ import java.sql.SQLException;
 
 /**
  * @author Feng Zhaohao
- * Created on 2019/12/8
+ * Created on 2019/12/9
  */
-public class AutopartsOperation {
+public class StaffOperation {
 
     /**
      * 查询是否存在某 id 的记录
      */
     static boolean isExistId(int id) {
         // 查询的 sql 语句
-        String sql = "select * from autoparts where id = ?";
+        String sql = "select * from staff where id = ?";
         Connection connection = DbOpenHelper.getUserConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -59,17 +57,15 @@ public class AutopartsOperation {
     }
 
     /**
-     * 插入汽车配件信息
+     * 插入员工信息
      */
-    public static void insertAutoparts(final AutopartsData autopartsData, final OperationListener listener) {
+    public static void insertStaff(final StaffData staffData, final OperationListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 // 插入数据的 sql 语句
-//                String sql = "insert into autoparts (id, name, use, " +
-//                        "price) values (?, ?, ?, ?)";
-                String sql = "INSERT INTO `purchase_and_sale`.`autoparts`(`id`, `name`, `use`, `price`)" +
-                        " VALUES (?, ?, ?, ?)";
+                String sql = "INSERT INTO `purchase_and_sale`.`staff`(`id`, `name`, `contact`)" +
+                        " VALUES (?, ?, ?)";
                 Connection connection = DbOpenHelper.getUserConnection();
                 PreparedStatement ps = null;
                 if (connection == null) {
@@ -78,10 +74,9 @@ public class AutopartsOperation {
                 }
                 try {
                     ps = connection.prepareStatement(sql);
-                    ps.setInt(1, autopartsData.getId());
-                    ps.setString(2, autopartsData.getName());
-                    ps.setString(3, autopartsData.getUse());
-                    ps.setFloat(4, autopartsData.getPrice());
+                    ps.setInt(1, staffData.getId());
+                    ps.setString(2, staffData.getName());
+                    ps.setString(3, staffData.getContact());
                     // 执行语句
                     ps.executeUpdate();
                 } catch (SQLException e) {

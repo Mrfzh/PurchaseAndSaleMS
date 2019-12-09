@@ -14,7 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.AutopartsInsertActivity"></activity>
+        <activity android:name=".view.StockAlterActivity"></activity>
+        <activity android:name=".view.StockInsertActivity" />
+        <activity android:name=".view.StockActivity" />
+        <activity android:name=".view.PurchaseAlterActivity" />
+        <activity android:name=".view.StaffInsertActivity" />
+        <activity android:name=".view.AutopartsInsertActivity" />
         <activity android:name=".view.PurchaseInsertActivity" />
         <activity android:name=".view.PurchaseActivity" />
         <activity android:name=".view.RegisterActivity" />

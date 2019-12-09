@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_stock_id_text"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="库存信息编号："
+        android:textColor="#222222"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginStart="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_stock_id"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_toEndOf="@id/tv_stock_id_text"
+        android:text="测试数据"
+        android:textColor="#222222"
+        android:textSize="14sp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_stock_name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@id/tv_stock_id_text"
+        android:text="配件名称："
+        android:textColor="#222222"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginStart="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_stock_name"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_toEndOf="@id/tv_stock_name_text"
+        android:layout_below="@id/tv_stock_id_text"
+        android:text="测试数据"
+        android:textColor="#222222"
+        android:textSize="14sp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_stock_use_text"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@id/tv_stock_name_text"
+        android:text="配件用途："
+        android:textColor="#222222"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginStart="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_stock_use"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_toEndOf="@id/tv_stock_use_text"
+        android:layout_below="@id/tv_stock_name_text"
+        android:text="测试数据"
+        android:textColor="#222222"
+        android:textSize="14sp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_stock_price_text"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@id/tv_stock_use_text"
+        android:text="配件价格："
+        android:textColor="#222222"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginStart="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_stock_price"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_toEndOf="@id/tv_stock_price_text"
+        android:layout_below="@id/tv_stock_use_text"
+        android:text="测试数据"
+        android:textColor="#222222"
+        android:textSize="14sp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_stock_num_text"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@id/tv_stock_price"
+        android:text="配件数量："
+        android:textColor="#222222"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginStart="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_stock_num"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_toEndOf="@id/tv_stock_num_text"
+        android:layout_below="@id/tv_stock_price"
+        android:text="测试数据"
+        android:textColor="#222222"
+        android:textSize="14sp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_stock_storehouse_name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@id/tv_stock_num_text"
+        android:text="仓库名称："
+        android:textColor="#222222"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginStart="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_stock_storehouse_name"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_toEndOf="@id/tv_stock_storehouse_name_text"
+        android:layout_below="@id/tv_stock_num_text"
+        android:text="测试数据"
+        android:textColor="#222222"
+        android:textSize="14sp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_stock_storehouse_address_text"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@id/tv_stock_storehouse_name_text"
+        android:text="仓库地址："
+        android:textColor="#222222"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginStart="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_stock_storehouse_address"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_toEndOf="@id/tv_stock_storehouse_address_text"
+        android:layout_below="@id/tv_stock_storehouse_name_text"
+        android:text="测试数据"
+        android:textColor="#222222"
+        android:textSize="14sp"
+        android:gravity="center"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#222222"
+        android:layout_below="@id/tv_stock_storehouse_address_text"/>
+
+</RelativeLayout>

@@ -13,22 +13,24 @@ import android.widget.ProgressBar;
 
 import com.feng.purchaseandsalems.R;
 import com.feng.purchaseandsalems.base.BaseActivity;
-import com.feng.purchaseandsalems.db.AutopartsOperation;
 import com.feng.purchaseandsalems.db.OperationListener;
 import com.feng.purchaseandsalems.db.PurchaseOperation;
-import com.feng.purchaseandsalems.entity.AutopartsData;
+import com.feng.purchaseandsalems.db.StockOperation;
 import com.feng.purchaseandsalems.entity.PurchaseData;
+import com.feng.purchaseandsalems.entity.StockData;
 import com.feng.purchaseandsalems.util.SoftInputUtil;
 
-public class AutopartsInsertActivity extends BaseActivity implements View.OnClickListener {
+public class StockAlterActivity extends BaseActivity implements View.OnClickListener{
 
     private ImageView mBackIv;
     private Button mInsertBtn;
-    private EditText mIdEt;
-    private EditText mNameEt;
-    private EditText mUseEt;
-    private EditText mPriceEt;
+    private EditText mAutopartsIdEt;
+    private EditText mNumEt;
+    private EditText mStorehouseNameEt;
+    private EditText mStorehouseAddressEt;
     private ProgressBar mProgressBar;
+
+    private int mAlterId;
 
     @Override
     protected void doBeforeSetContentView() {
@@ -37,27 +39,27 @@ public class AutopartsInsertActivity extends BaseActivity implements View.OnClic
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_autoparts_insert;
+        return R.layout.activity_stock_alter;
     }
 
     @Override
     protected void initData() {
-
+        mAlterId = getIntent().getIntExtra("AlterId", 0);
     }
 
     @Override
     protected void initView() {
-        mBackIv = findViewById(R.id.iv_autoparts_insert_back);
+        mBackIv = findViewById(R.id.iv_stock_alter_back);
         mBackIv.setOnClickListener(this);
-        mInsertBtn = findViewById(R.id.btn_autoparts_insert_insert);
+        mInsertBtn = findViewById(R.id.btn_stock_alter_alter);
         mInsertBtn.setOnClickListener(this);
 
-        mIdEt = findViewById(R.id.et_autoparts_insert_id);
-        mNameEt = findViewById(R.id.et_autoparts_insert_name);
-        mUseEt = findViewById(R.id.et_autoparts_insert_use);
-        mPriceEt = findViewById(R.id.et_autoparts_insert_price);
+        mAutopartsIdEt = findViewById(R.id.et_stock_alter_autoParts_id);
+        mNumEt = findViewById(R.id.et_stock_alter_num);
+        mStorehouseNameEt = findViewById(R.id.et_stock_alter_storehouse_name);
+        mStorehouseAddressEt = findViewById(R.id.et_stock_alter_storehouse_address);
 
-        mProgressBar = findViewById(R.id.pb_autoparts_insert);
+        mProgressBar = findViewById(R.id.pb_stock_alter);
     }
 
     @Override
@@ -68,32 +70,32 @@ public class AutopartsInsertActivity extends BaseActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_autoparts_insert_back:
+            case R.id.iv_stock_alter_back:
                 finish();
                 break;
-            case R.id.btn_autoparts_insert_insert:
+            case R.id.btn_stock_alter_alter:
                 if (!checkInsert()) {
                     break;
                 }
-                SoftInputUtil.hideSoftInput(AutopartsInsertActivity.this);
                 mProgressBar.setVisibility(View.VISIBLE);
-                // 插入汽车配件信息
-                final AutopartsData autopartsData = new AutopartsData(
-                        Integer.parseInt(mIdEt.getText().toString()),
-                        mNameEt.getText().toString().trim(),
-                        mUseEt.getText().toString().trim(),
-                        Float.parseFloat(mPriceEt.getText().toString()));
+                SoftInputUtil.hideSoftInput(StockAlterActivity.this);
+                // 更新库存信息
+                final StockData stockData = new StockData(mAlterId,
+                        Integer.parseInt(mAutopartsIdEt.getText().toString()),
+                        Integer.parseInt(mNumEt.getText().toString()),
+                        mStorehouseNameEt.getText().toString().trim(),
+                        mStorehouseAddressEt.getText().toString().trim());
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        AutopartsOperation.insertAutoparts(autopartsData, new OperationListener() {
+                        StockOperation.alterStock(stockData, new OperationListener() {
                             @Override
                             public void success() {
                                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                                     @Override
                                     public void run() {
                                         mProgressBar.setVisibility(View.GONE);
-                                        showShortToast("插入成功");
+                                        showShortToast("更改成功");
                                         finish();
                                     }
                                 });
@@ -106,6 +108,10 @@ public class AutopartsInsertActivity extends BaseActivity implements View.OnClic
                                     public void run() {
                                         mProgressBar.setVisibility(View.GONE);
                                         showShortToast(errorMsg);
+                                        if (errorMsg.equals("不存在该汽车配件，请先插入该汽车配件的信息")) {
+                                            // 跳转到插入汽车配件信息活动
+                                            jumpToNewActivity(AutopartsInsertActivity.class);
+                                        }
                                     }
                                 });
                             }
@@ -119,20 +125,20 @@ public class AutopartsInsertActivity extends BaseActivity implements View.OnClic
     }
 
     private boolean checkInsert() {
-        if (mIdEt.getText().toString().trim().equals("")) {
+        if (mAutopartsIdEt.getText().toString().trim().equals("")) {
             showShortToast("请输入汽车配件编号");
             return false;
         }
-        if (mNameEt.getText().toString().trim().equals("")) {
-            showShortToast("请输入汽车配件名称");
+        if (mNumEt.getText().toString().trim().equals("")) {
+            showShortToast("请输入汽车配件数量");
             return false;
         }
-        if (mUseEt.getText().toString().trim().equals("")) {
-            showShortToast("请输入汽车配件用途");
+        if (mStorehouseNameEt.getText().toString().trim().equals("")) {
+            showShortToast("请输入仓库名称");
             return false;
         }
-        if (mPriceEt.getText().toString().trim().equals("")) {
-            showShortToast("请输入汽车配件价格");
+        if (mStorehouseAddressEt.getText().toString().trim().equals("")) {
+            showShortToast("请输入仓库地址");
             return false;
         }
 

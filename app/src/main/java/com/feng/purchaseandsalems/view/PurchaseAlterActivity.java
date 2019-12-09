@@ -13,16 +13,15 @@ import android.widget.ProgressBar;
 
 import com.feng.purchaseandsalems.R;
 import com.feng.purchaseandsalems.base.BaseActivity;
-import com.feng.purchaseandsalems.db.AutopartsOperation;
 import com.feng.purchaseandsalems.db.OperationListener;
 import com.feng.purchaseandsalems.db.PurchaseOperation;
 import com.feng.purchaseandsalems.entity.PurchaseData;
 import com.feng.purchaseandsalems.util.SoftInputUtil;
 
-public class PurchaseInsertActivity extends BaseActivity implements View.OnClickListener{
+public class PurchaseAlterActivity extends BaseActivity implements View.OnClickListener{
 
     private ImageView mBackIv;
-    private Button mInsertBtn;
+    private Button mAlterBtn;
     private EditText mAutopartsIdEt;
     private EditText mNumEt;
     private EditText mFactoryNameEt;
@@ -30,6 +29,8 @@ public class PurchaseInsertActivity extends BaseActivity implements View.OnClick
     private EditText mFactoryContactEt;
     private EditText mStaffIdEt;
     private ProgressBar mProgressBar;
+    
+    private int mAlterId;   
 
     @Override
     protected void doBeforeSetContentView() {
@@ -38,29 +39,29 @@ public class PurchaseInsertActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_purchase_insert;
+        return R.layout.activity_purchase_alter;
     }
 
     @Override
     protected void initData() {
-
+        mAlterId = getIntent().getIntExtra("AlterId", 0);
     }
 
     @Override
     protected void initView() {
-        mBackIv = findViewById(R.id.iv_purchase_insert_back);
+        mBackIv = findViewById(R.id.iv_purchase_alter_back);
         mBackIv.setOnClickListener(this);
-        mInsertBtn = findViewById(R.id.btn_purchase_insert_insert);
-        mInsertBtn.setOnClickListener(this);
+        mAlterBtn = findViewById(R.id.btn_purchase_alter_alter);
+        mAlterBtn.setOnClickListener(this);
 
-        mAutopartsIdEt = findViewById(R.id.et_purchase_insert_autoParts_id);
-        mNumEt = findViewById(R.id.et_purchase_insert_num);
-        mFactoryNameEt = findViewById(R.id.et_purchase_insert_factory_name);
-        mFactoryAddressEt = findViewById(R.id.et_purchase_insert_factory_address);
-        mFactoryContactEt = findViewById(R.id.et_purchase_insert_factory_contact);
-        mStaffIdEt = findViewById(R.id.et_purchase_insert_staff_id);
+        mAutopartsIdEt = findViewById(R.id.et_purchase_alter_autoParts_id);
+        mNumEt = findViewById(R.id.et_purchase_alter_num);
+        mFactoryNameEt = findViewById(R.id.et_purchase_alter_factory_name);
+        mFactoryAddressEt = findViewById(R.id.et_purchase_alter_factory_address);
+        mFactoryContactEt = findViewById(R.id.et_purchase_alter_factory_contact);
+        mStaffIdEt = findViewById(R.id.et_purchase_alter_staff_id);
 
-        mProgressBar = findViewById(R.id.pb_purchase_insert);
+        mProgressBar = findViewById(R.id.pb_purchase_alter);
     }
 
     @Override
@@ -71,17 +72,17 @@ public class PurchaseInsertActivity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_purchase_insert_back:
+            case R.id.iv_purchase_alter_back:
                 finish();
                 break;
-            case R.id.btn_purchase_insert_insert:
+            case R.id.btn_purchase_alter_alter:
                 if (!checkInsert()) {
                     break;
                 }
                 mProgressBar.setVisibility(View.VISIBLE);
-                SoftInputUtil.hideSoftInput(PurchaseInsertActivity.this);
-                // 插入进货信息
-                final PurchaseData purchaseData = new PurchaseData(
+                SoftInputUtil.hideSoftInput(PurchaseAlterActivity.this);
+                // 更新进货信息
+                final PurchaseData purchaseData = new PurchaseData(mAlterId,
                         Integer.parseInt(mAutopartsIdEt.getText().toString()),
                         Integer.parseInt(mNumEt.getText().toString()),
                         mFactoryNameEt.getText().toString().trim(),
@@ -91,14 +92,14 @@ public class PurchaseInsertActivity extends BaseActivity implements View.OnClick
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        PurchaseOperation.insertPurchase(purchaseData, new OperationListener() {
+                        PurchaseOperation.alterPurchase(purchaseData, new OperationListener() {
                             @Override
                             public void success() {
                                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                                     @Override
                                     public void run() {
                                         mProgressBar.setVisibility(View.GONE);
-                                        showShortToast("插入成功");
+                                        showShortToast("更改成功");
                                         finish();
                                     }
                                 });

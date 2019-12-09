@@ -1,8 +1,8 @@
 package com.feng.purchaseandsalems.db;
 
-import android.util.Log;
-
 import com.feng.purchaseandsalems.entity.PurchaseData;
+import com.feng.purchaseandsalems.entity.StockData;
+import com.feng.purchaseandsalems.entity.StockSecondData;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,16 +13,16 @@ import java.util.List;
 
 /**
  * @author Feng Zhaohao
- * Created on 2019/12/8
+ * Created on 2019/12/9
  */
-public class PurchaseOperation {
+public class StockOperation {
 
     /**
      * 查询是否存在某 id 的记录
      */
     public static boolean isExistId(int id) {
         // 查询的 sql 语句
-        String sql = "select * from purchase where id = ?";
+        String sql = "select * from stock where id = ?";
         Connection connection = DbOpenHelper.getUserConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -60,26 +60,21 @@ public class PurchaseOperation {
     }
 
     /**
-     * 插入进货信息
+     * 插入库存信息
      */
-    public static void insertPurchase(final PurchaseData purchaseData, final OperationListener listener) {
+    public static void insertStock(final StockData stockData, final OperationListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 // 先检查是否存在该汽车配件
-                if (!AutopartsOperation.isExistId(purchaseData.getAutoPartsId())) {
+                if (!AutopartsOperation.isExistId(stockData.getAutoPartsId())) {
                     listener.error("不存在该汽车配件，请先插入该汽车配件的信息");
-                    return;
-                }
-                // 再检查是否存在该员工
-                if (!StaffOperation.isExistId(purchaseData.getStaffId())) {
-                    listener.error("不存在该员工，请先插入该汽车配件的信息");
                     return;
                 }
 
                 // 插入数据的 sql 语句
-                String sql = "insert into purchase (autoPartsId, num, factoryName, " +
-                        "factoryAddress, factoryContact, staffId) values (?, ?, ?, ?, ?, ?)";
+                String sql = "insert into stock (autoPartsId, num, storehouseName, " +
+                        "storehouseAddress) values (?, ?, ?, ?)";
                 Connection connection = DbOpenHelper.getUserConnection();
                 PreparedStatement ps = null;
                 if (connection == null) {
@@ -88,12 +83,10 @@ public class PurchaseOperation {
                 }
                 try {
                     ps = connection.prepareStatement(sql);
-                    ps.setInt(1, purchaseData.getAutoPartsId());
-                    ps.setInt(2, purchaseData.getNum());
-                    ps.setString(3, purchaseData.getFactoryName());
-                    ps.setString(4, purchaseData.getFactoryAddress());
-                    ps.setString(5, purchaseData.getFactoryContact());
-                    ps.setInt(6, purchaseData.getStaffId());
+                    ps.setInt(1, stockData.getAutoPartsId());
+                    ps.setInt(2, stockData.getNum());
+                    ps.setString(3, stockData.getStorehouseName());
+                    ps.setString(4, stockData.getStorehouseAddress());
                     // 执行语句
                     ps.executeUpdate();
                 } catch (SQLException e) {
@@ -116,9 +109,9 @@ public class PurchaseOperation {
     }
 
     /**
-     * 根据 id 删除进货信息
+     * 根据 id 删除库存
      */
-    public static void deletePurchase(final int deleteId, final OperationListener listener) {
+    public static void deleteStock(final int deleteId, final OperationListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -128,7 +121,7 @@ public class PurchaseOperation {
                 }
 
                 // 删除数据的 sql 语句
-                String sql = "delete from purchase where id = ?";
+                String sql = "delete from stock where id = ?";
                 Connection connection = DbOpenHelper.getUserConnection();
                 if (connection == null) {
                     listener.error("用户信息失效，请重新登录");
@@ -159,29 +152,24 @@ public class PurchaseOperation {
     }
 
     /**
-     * 更新进货信息
+     * 更新库存信息
      */
-    public static void alterPurchase(final PurchaseData purchaseData, final OperationListener listener) {
+    public static void alterStock(final StockData stockData, final OperationListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 // 先检查是否存在该汽车配件
-                if (!AutopartsOperation.isExistId(purchaseData.getAutoPartsId())) {
+                if (!AutopartsOperation.isExistId(stockData.getAutoPartsId())) {
                     listener.error("不存在该汽车配件，请先插入该汽车配件的信息");
                     return;
                 }
-                // 再检查是否存在该员工
-                if (!StaffOperation.isExistId(purchaseData.getStaffId())) {
-                    listener.error("不存在该员工，请先插入该汽车配件的信息");
-                    return;
-                }
 
-                deletePurchase(purchaseData.getId(), new OperationListener() {
+                deleteStock(stockData.getId(), new OperationListener() {
                     @Override
                     public void success() {
                         // 插入数据的 sql 语句
-                        String sql = "insert into purchase (id, autoPartsId, num, factoryName, " +
-                                "factoryAddress, factoryContact, staffId) values (?, ?, ?, ?, ?, ?, ?)";
+                        String sql = "insert into stock (id, autoPartsId, num, storehouseName, " +
+                                "storehouseAddress) values (?, ?, ?, ?, ?)";
                         Connection connection = DbOpenHelper.getUserConnection();
                         PreparedStatement ps = null;
                         if (connection == null) {
@@ -190,13 +178,11 @@ public class PurchaseOperation {
                         }
                         try {
                             ps = connection.prepareStatement(sql);
-                            ps.setInt(1, purchaseData.getId());
-                            ps.setInt(2, purchaseData.getAutoPartsId());
-                            ps.setInt(3, purchaseData.getNum());
-                            ps.setString(4, purchaseData.getFactoryName());
-                            ps.setString(5, purchaseData.getFactoryAddress());
-                            ps.setString(6, purchaseData.getFactoryContact());
-                            ps.setInt(7, purchaseData.getStaffId());
+                            ps.setInt(1, stockData.getId());
+                            ps.setInt(2, stockData.getAutoPartsId());
+                            ps.setInt(3, stockData.getNum());
+                            ps.setString(4, stockData.getStorehouseName());
+                            ps.setString(5, stockData.getStorehouseAddress());
                             // 执行语句
                             ps.executeUpdate();
                         } catch (SQLException e) {
@@ -225,24 +211,20 @@ public class PurchaseOperation {
     }
 
     public interface QueryAllListener {
-        void success(List<PurchaseData> dataList);
-        void error(String errorMsg);
-    }
-
-    public interface QueryOneListener {
-        void success(List<PurchaseData> dataList);
+        void success(List<StockSecondData> dataList);
         void error(String errorMsg);
     }
 
     /**
-     * 查询所有进货信息
+     * 查询所有进货信息，进行多表连接
      */
     public static void queryAll(final QueryAllListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 // 查询的 sql 语句
-                String sql = "select * from purchase";
+                String sql = "select stock.*, autoparts.* from stock, autoparts " +
+                        "where stock.autoPartsId = autoparts.id";
                 Connection connection = DbOpenHelper.getUserConnection();
                 if (connection == null) {
                     listener.error("用户信息失效，请重新登录");
@@ -250,7 +232,7 @@ public class PurchaseOperation {
                 }
                 PreparedStatement ps = null;
                 ResultSet rs = null;
-                List<PurchaseData> dataList = new ArrayList<>();
+                List<StockSecondData> dataList = new ArrayList<>();
                 try {
                     ps = connection.prepareStatement(sql);
                     // 执行语句（执行查询语句用的是 executeQuery 方法）
@@ -258,75 +240,14 @@ public class PurchaseOperation {
                     // 得到查询结果
                     if (rs != null) {
                         while (rs.next()) {
-                            PurchaseData data = new PurchaseData();
-                            data.setId(rs.getInt("id"));
-                            data.setAutoPartsId(rs.getInt("autoPartsId"));
+                            StockSecondData data = new StockSecondData();
+                            data.setId(rs.getInt("stock.id"));
                             data.setNum(rs.getInt("num"));
-                            data.setFactoryName(rs.getString("factoryName"));
-                            data.setFactoryAddress(rs.getString("factoryAddress"));
-                            data.setFactoryContact(rs.getString("factoryContact"));
-                            data.setStaffId(rs.getInt("staffId"));
-                            dataList.add(data);
-                        }
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    listener.error("执行 sql 语句失败");
-                } finally {
-                    if (ps != null) {
-                        try {
-                            ps.close();
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if (rs != null) {
-                        try {
-                            rs.close();
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-
-                listener.success(dataList);
-            }
-        }).start();
-    }
-
-    /**
-     * 根据汽车配件编号，查询指定的进货信息
-     */
-    public static void queryOne(final int autopartsId, final QueryOneListener listener) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // 查询的 sql 语句
-                String sql = "select * from purchase where autoPartsId = ?";
-                Connection connection = DbOpenHelper.getUserConnection();
-                if (connection == null) {
-                    listener.error("用户信息失效，请重新登录");
-                    return;
-                }
-                PreparedStatement ps = null;
-                ResultSet rs = null;
-                List<PurchaseData> dataList = new ArrayList<>();
-                try {
-                    ps = connection.prepareStatement(sql);
-                    ps.setInt(1, autopartsId);
-                    // 执行语句（执行查询语句用的是 executeQuery 方法）
-                    rs = ps.executeQuery();
-                    // 得到查询结果
-                    if (rs != null) {
-                        while (rs.next()) {
-                            PurchaseData data = new PurchaseData();
-                            data.setId(rs.getInt("id"));
-                            data.setAutoPartsId(rs.getInt("autoPartsId"));
-                            data.setNum(rs.getInt("num"));
-                            data.setFactoryName(rs.getString("factoryName"));
-                            data.setFactoryAddress(rs.getString("factoryAddress"));
-                            data.setFactoryContact(rs.getString("factoryContact"));
-                            data.setStaffId(rs.getInt("staffId"));
+                            data.setStorehouseName(rs.getString("storehouseName"));
+                            data.setStorehouseAddress(rs.getString("storehouseAddress"));
+                            data.setName(rs.getString("name"));
+                            data.setUse(rs.getString("use"));
+                            data.setPrice(rs.getFloat("price"));
                             dataList.add(data);
                         }
                     }

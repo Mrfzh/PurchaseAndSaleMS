@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.PurchaseActivity">
+    tools:context=".view.StockActivity">
 
     <!-- title bar -->
 
@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageView
-        android:id="@+id/iv_purchase_back"
+        android:id="@+id/iv_stock_back"
         android:layout_width="60dp"
         android:layout_height="60dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,112 +26,89 @@
         android:padding="18dp"/>
 
     <TextView
-        android:id="@+id/tv_purchase_title"
+        android:id="@+id/tv_stock_title"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:text="进货模块"
+        android:text="库存模块"
         android:textSize="20sp"
         android:textColor="#ffffff"
-        app:layout_constraintStart_toEndOf="@id/iv_purchase_back"
+        app:layout_constraintStart_toEndOf="@id/iv_stock_back"
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="center"/>
 
     <!-- function -->
 
     <Button
-        android:id="@+id/btn_purchase_insert"
+        android:id="@+id/btn_stock_insert"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_purchase_back"
-        android:text="插入进货信息"/>
+        app:layout_constraintTop_toBottomOf="@id/iv_stock_back"
+        android:text="插入库存信息"/>
 
     <Button
-        android:id="@+id/btn_purchase_delete"
+        android:id="@+id/btn_stock_delete"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_purchase_insert"
-        app:layout_constraintEnd_toStartOf="@id/et_purchase_delete_id"
-        android:text="删除进货信息"/>
+        app:layout_constraintTop_toBottomOf="@id/btn_stock_insert"
+        app:layout_constraintEnd_toStartOf="@id/et_stock_delete_id"
+        android:text="删除库存信息"/>
 
     <EditText
-        android:id="@+id/et_purchase_delete_id"
+        android:id="@+id/et_stock_delete_id"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        app:layout_constraintStart_toEndOf="@id/btn_purchase_delete"
-        app:layout_constraintTop_toBottomOf="@id/btn_purchase_insert"
+        app:layout_constraintStart_toEndOf="@id/btn_stock_delete"
+        app:layout_constraintTop_toBottomOf="@id/btn_stock_insert"
         app:layout_constraintEnd_toEndOf="parent"
         android:textColor="@android:color/holo_blue_light"
         android:textSize="16sp"
-        android:hint="请输入要删除的进货信息编号"
+        android:hint="请输入要删除的库存信息编号"
         android:singleLine="true"
         android:maxLength="10"
         android:inputType="number"/>
 
     <Button
-        android:id="@+id/btn_purchase_alter"
+        android:id="@+id/btn_stock_alter"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_purchase_delete"
-        app:layout_constraintEnd_toStartOf="@id/et_purchase_alter_id"
-        android:text="更改进货信息"/>
+        app:layout_constraintTop_toBottomOf="@id/btn_stock_delete"
+        app:layout_constraintEnd_toStartOf="@id/et_stock_alter_id"
+        android:text="更改库存信息"/>
 
     <EditText
-        android:id="@+id/et_purchase_alter_id"
+        android:id="@+id/et_stock_alter_id"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        app:layout_constraintStart_toEndOf="@id/btn_purchase_alter"
-        app:layout_constraintTop_toBottomOf="@id/btn_purchase_delete"
+        app:layout_constraintStart_toEndOf="@id/btn_stock_alter"
+        app:layout_constraintTop_toBottomOf="@id/btn_stock_delete"
         app:layout_constraintEnd_toEndOf="parent"
         android:textColor="@android:color/holo_blue_light"
         android:textSize="16sp"
-        android:hint="请输入要更改的进货信息编号"
+        android:hint="请输入要更改的库存信息编号"
         android:singleLine="true"
         android:maxLength="10"
         android:inputType="number"/>
 
     <Button
-        android:id="@+id/btn_purchase_query_all"
+        android:id="@+id/btn_stock_query_all"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_purchase_alter"
-        android:text="查询所有进货信息"/>
-
-    <Button
-        android:id="@+id/btn_purchase_query_one"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_purchase_query_all"
-        app:layout_constraintEnd_toStartOf="@id/et_purchase_query_one"
-        android:text="查询指定进货信息"/>
-
-    <EditText
-        android:id="@+id/et_purchase_query_one"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toEndOf="@id/btn_purchase_query_one"
-        app:layout_constraintTop_toBottomOf="@id/btn_purchase_query_all"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@android:color/holo_blue_light"
-        android:textSize="16sp"
-        android:hint="请输入要查询的汽车配件编号"
-        android:singleLine="true"
-        android:maxLength="10"
-        android:inputType="number"/>
+        app:layout_constraintTop_toBottomOf="@id/btn_stock_alter"
+        android:text="查询所有库存信息"/>
 
     <TextView
-        android:id="@+id/tv_purchase_list_text"
+        android:id="@+id/tv_stock_list_text"
         android:layout_width="0dp"
         android:layout_height="30dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_purchase_query_one"
+        app:layout_constraintTop_toBottomOf="@id/btn_stock_query_all"
         android:text="查询结果"
         android:textColor="#666666"
         android:textSize="16sp"
@@ -141,18 +118,18 @@
         android:paddingEnd="30dp"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_purchase_list"
+        android:id="@+id/rv_stock_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_purchase_list_text"
+        app:layout_constraintTop_toBottomOf="@id/tv_stock_list_text"
         app:layout_constraintBottom_toBottomOf="parent"
         android:scrollbars="none"
         android:overScrollMode="never"/>
 
     <ProgressBar
-        android:id="@+id/pb_purchase"
+        android:id="@+id/pb_stock"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

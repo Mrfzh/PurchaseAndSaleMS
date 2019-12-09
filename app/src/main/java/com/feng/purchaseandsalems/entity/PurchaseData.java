@@ -5,12 +5,27 @@ package com.feng.purchaseandsalems.entity;
  * Created on 2019/12/8
  */
 public class PurchaseData {
+    private int id;
     private int autoPartsId;
     private int num;
     private String factoryName;
     private String factoryAddress;
     private String factoryContact;
     private int staffId;
+
+    public PurchaseData() {
+    }
+
+    public PurchaseData(int id, int autoPartsId, int num, String factoryName,
+                        String factoryAddress, String factoryContact, int staffId) {
+        this.id = id;
+        this.autoPartsId = autoPartsId;
+        this.num = num;
+        this.factoryName = factoryName;
+        this.factoryAddress = factoryAddress;
+        this.factoryContact = factoryContact;
+        this.staffId = staffId;
+    }
 
     public PurchaseData(int autoPartsId, int num, String factoryName,
                         String factoryAddress, String factoryContact, int staffId) {
@@ -68,5 +83,13 @@ public class PurchaseData {
 
     public void setStaffId(int staffId) {
         this.staffId = staffId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

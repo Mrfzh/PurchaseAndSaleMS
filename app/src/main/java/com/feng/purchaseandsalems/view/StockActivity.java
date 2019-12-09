@@ -3,9 +3,11 @@ package com.feng.purchaseandsalems.view;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.view.PagerAdapter;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -15,15 +17,20 @@ import android.widget.ProgressBar;
 
 import com.feng.purchaseandsalems.R;
 import com.feng.purchaseandsalems.adapter.PurchaseAdapter;
+import com.feng.purchaseandsalems.adapter.StockAdapter;
 import com.feng.purchaseandsalems.base.BaseActivity;
 import com.feng.purchaseandsalems.db.OperationListener;
 import com.feng.purchaseandsalems.db.PurchaseOperation;
+import com.feng.purchaseandsalems.db.StockOperation;
 import com.feng.purchaseandsalems.entity.PurchaseData;
+import com.feng.purchaseandsalems.entity.StockSecondData;
 import com.feng.purchaseandsalems.util.SoftInputUtil;
 
 import java.util.List;
 
-public class PurchaseActivity extends BaseActivity implements View.OnClickListener{
+public class StockActivity extends BaseActivity implements View.OnClickListener{
+
+    private static final String TAG = "StockActivity";
 
     private ImageView mBackIv;
     private Button mInsertBtn;
@@ -32,19 +39,17 @@ public class PurchaseActivity extends BaseActivity implements View.OnClickListen
     private Button mAlterBtn;
     private EditText mAlterIdEt;
     private Button mQueryAllBtn;
-    private Button mQueryOneBtn;
-    private EditText mQueryOneEt;
     private RecyclerView mListRv;
     private ProgressBar mProgressBar;
 
     @Override
     protected void doBeforeSetContentView() {
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);   //隐藏标题栏
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_purchase;
+        return R.layout.activity_stock;
     }
 
     @Override
@@ -54,28 +59,25 @@ public class PurchaseActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initView() {
-        mBackIv = findViewById(R.id.iv_purchase_back);
+        mBackIv = findViewById(R.id.iv_stock_back);
         mBackIv.setOnClickListener(this);
 
-        mInsertBtn = findViewById(R.id.btn_purchase_insert);
+        mInsertBtn = findViewById(R.id.btn_stock_insert);
         mInsertBtn.setOnClickListener(this);
-        mDeleteBtn = findViewById(R.id.btn_purchase_delete);
+        mDeleteBtn = findViewById(R.id.btn_stock_delete);
         mDeleteBtn.setOnClickListener(this);
-        mAlterBtn = findViewById(R.id.btn_purchase_alter);
+        mAlterBtn = findViewById(R.id.btn_stock_alter);
         mAlterBtn.setOnClickListener(this);
-        mQueryAllBtn = findViewById(R.id.btn_purchase_query_all);
+        mQueryAllBtn = findViewById(R.id.btn_stock_query_all);
         mQueryAllBtn.setOnClickListener(this);
-        mQueryOneBtn = findViewById(R.id.btn_purchase_query_one);
-        mQueryOneBtn.setOnClickListener(this);
 
-        mDeleteIdEt = findViewById(R.id.et_purchase_delete_id);
-        mAlterIdEt = findViewById(R.id.et_purchase_alter_id);
-        mQueryOneEt = findViewById(R.id.et_purchase_query_one);
+        mDeleteIdEt = findViewById(R.id.et_stock_delete_id);
+        mAlterIdEt = findViewById(R.id.et_stock_alter_id);
 
-        mListRv = findViewById(R.id.rv_purchase_list);
+        mListRv = findViewById(R.id.rv_stock_list);
         mListRv.setLayoutManager(new LinearLayoutManager(this));
 
-        mProgressBar = findViewById(R.id.pb_purchase);
+        mProgressBar = findViewById(R.id.pb_stock);
     }
 
     @Override
@@ -86,25 +88,25 @@ public class PurchaseActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_purchase_back:
+            case R.id.iv_stock_back:
                 finish();
                 break;
-            case R.id.btn_purchase_insert:
-                jumpToNewActivity(PurchaseInsertActivity.class);
+            case R.id.btn_stock_insert:
+                jumpToNewActivity(StockInsertActivity.class);
                 break;
-            case R.id.btn_purchase_delete:
+            case R.id.btn_stock_delete:
                 final String deleteId = mDeleteIdEt.getText().toString();
                 if (deleteId.equals("")) {
-                    showShortToast("请输入要删除的进货信息编号");
+                    showShortToast("请输入要删除的库存信息编号");
                     break;
                 }
                 mProgressBar.setVisibility(View.VISIBLE);
-                SoftInputUtil.hideSoftInput(PurchaseActivity.this);
-                // 删除进货信息
+                SoftInputUtil.hideSoftInput(StockActivity.this);
+                // 删除库存信息
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        PurchaseOperation.deletePurchase(Integer.parseInt(deleteId), new OperationListener() {
+                        StockOperation.deleteStock(Integer.parseInt(deleteId), new OperationListener() {
                             @Override
                             public void success() {
                                 new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -130,88 +132,47 @@ public class PurchaseActivity extends BaseActivity implements View.OnClickListen
                     }
                 }, 500);
                 break;
-            case R.id.btn_purchase_alter:
+            case R.id.btn_stock_alter:
                 final String alterId = mAlterIdEt.getText().toString();
                 if (alterId.equals("")) {
-                    showShortToast("请输入要更改的进货信息编号");
+                    showShortToast("请输入要更改的库存信息编号");
                     break;
                 }
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        if (!PurchaseOperation.isExistId(Integer.parseInt(alterId))) {
+                        if (!StockOperation.isExistId(Integer.parseInt(alterId))) {
                             new Handler(Looper.getMainLooper()).post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    showShortToast("不存在该编号的进货信息");
+                                    showShortToast("不存在该编号的库存信息");
                                 }
                             });
                         } else {
-                            // 跳转到更改进货信息界面
-                            Intent intent = new Intent(PurchaseActivity.this, PurchaseAlterActivity.class);
+                            // 跳转到更改库存信息界面
+                            Intent intent = new Intent(StockActivity.this, StockAlterActivity.class);
                             intent.putExtra("AlterId", Integer.parseInt(alterId));
                             startActivity(intent);
                         }
                     }
                 }).start();
                 break;
-            case R.id.btn_purchase_query_all:
-                // 查询所有进货信息
+            case R.id.btn_stock_query_all:
+                // 查询所有库存信息（关联汽车配件）
                 mProgressBar.setVisibility(View.VISIBLE);
-                SoftInputUtil.hideSoftInput(PurchaseActivity.this);
+                SoftInputUtil.hideSoftInput(StockActivity.this);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        PurchaseOperation.queryAll(new PurchaseOperation.QueryAllListener() {
+                        StockOperation.queryAll(new StockOperation.QueryAllListener() {
                             @Override
-                            public void success(final List<PurchaseData> dataList) {
+                            public void success(final List<StockSecondData> dataList) {
                                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                                     @Override
                                     public void run() {
                                         mProgressBar.setVisibility(View.GONE);
-                                        PurchaseAdapter adapter = new PurchaseAdapter(
-                                                PurchaseActivity.this, dataList);
-                                        mListRv.setAdapter(adapter);
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void error(final String errorMsg) {
-                                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mProgressBar.setVisibility(View.GONE);
-                                        showShortToast(errorMsg);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                }, 500);
-                break;
-            case R.id.btn_purchase_query_one:
-                // 查询单条进货信息
-                final String autopartsId = mQueryOneEt.getText().toString();
-                if (autopartsId.equals("")) {
-                    showShortToast("请输入要查询的汽车配件编号");
-                    break;
-                }
-                mProgressBar.setVisibility(View.VISIBLE);
-                SoftInputUtil.hideSoftInput(PurchaseActivity.this);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        PurchaseOperation.queryOne(Integer.parseInt(autopartsId),
-                                new PurchaseOperation.QueryOneListener() {
-                            @Override
-                            public void success(final List<PurchaseData> dataList) {
-                                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mProgressBar.setVisibility(View.GONE);
-                                        PurchaseAdapter adapter = new PurchaseAdapter(
-                                                PurchaseActivity.this, dataList);
+                                        StockAdapter adapter = new StockAdapter(
+                                                StockActivity.this, dataList);
                                         mListRv.setAdapter(adapter);
                                     }
                                 });

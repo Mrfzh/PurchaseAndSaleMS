@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.StockAlterActivity">
+
+    <!-- title bar -->
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_stock_alter_back"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/back"
+        android:padding="18dp"/>
+
+    <TextView
+        android:id="@+id/tv_stock_alter_title"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="更改库存信息"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        app:layout_constraintStart_toEndOf="@id/iv_stock_alter_back"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"/>
+
+    <!-- info -->
+
+    <TextView
+        android:id="@+id/tv_stock_alter_autoParts_id"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_stock_alter_back"
+        android:layout_marginStart="30dp"
+        android:text="汽车配件编号："
+        android:textColor="#222222"
+        android:textSize="16sp"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/et_stock_alter_autoParts_id"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toEndOf="@id/tv_stock_alter_autoParts_id"
+        app:layout_constraintTop_toBottomOf="@id/iv_stock_alter_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="30dp"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="16sp"
+        android:hint="请输入新的汽车配件编号"
+        android:singleLine="true"
+        android:maxLength="10"
+        android:inputType="number"/>
+
+    <TextView
+        android:id="@+id/tv_stock_alter_num"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_stock_alter_autoParts_id"
+        android:layout_marginStart="30dp"
+        android:text="数量："
+        android:textColor="#222222"
+        android:textSize="16sp"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/et_stock_alter_num"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toEndOf="@id/tv_stock_alter_num"
+        app:layout_constraintTop_toBottomOf="@id/tv_stock_alter_autoParts_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="30dp"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="16sp"
+        android:hint="请输入新的汽车配件数量"
+        android:singleLine="true"
+        android:maxLength="10"
+        android:inputType="number"/>
+
+    <TextView
+        android:id="@+id/tv_stock_alter_storehouse_name"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_stock_alter_num"
+        android:layout_marginStart="30dp"
+        android:text="仓库名称："
+        android:textColor="#222222"
+        android:textSize="16sp"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/et_stock_alter_storehouse_name"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toEndOf="@id/tv_stock_alter_storehouse_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_stock_alter_num"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="30dp"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="16sp"
+        android:hint="请新的输入仓库名称"
+        android:singleLine="true"
+        android:maxLength="10" />
+
+    <TextView
+        android:id="@+id/tv_stock_alter_storehouse_address"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_stock_alter_storehouse_name"
+        android:layout_marginStart="30dp"
+        android:text="仓库地址："
+        android:textColor="#222222"
+        android:textSize="16sp"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/et_stock_alter_storehouse_address"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toEndOf="@id/tv_stock_alter_storehouse_address"
+        app:layout_constraintTop_toBottomOf="@id/tv_stock_alter_storehouse_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="30dp"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="16sp"
+        android:hint="请输入新的仓库地址"
+        android:singleLine="true"
+        android:maxLength="10" />
+
+    <Button
+        android:id="@+id/btn_stock_alter_alter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_stock_alter_storehouse_address"
+        android:text="更改信息"/>
+
+    <ProgressBar
+        android:id="@+id/pb_stock_alter"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:indeterminateTint="@android:color/holo_blue_light"
+        android:visibility="gone" />
+
+</android.support.constraint.ConstraintLayout>
