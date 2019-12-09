@@ -122,7 +122,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 if (!checkSale()) {
                     break;
                 }
-                showShortToast("进入销售模块");
+                jumpToNewActivity(SaleActivity.class);
                 break;
             default:
                 break;
