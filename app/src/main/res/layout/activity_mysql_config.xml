@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.MysqlConfigActivity">
+
+    <!-- title bar -->
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_mysql_config_back"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/back"
+        android:padding="18dp"/>
+
+    <TextView
+        android:id="@+id/tv_mysql_config_title"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="MySql 配置"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        app:layout_constraintStart_toEndOf="@id/iv_mysql_config_back"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_mysql_config_ip"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="IP："
+        android:textColor="#222222"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_mysql_config_back"
+        android:layout_marginStart="30dp"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/et_mysql_config_ip"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/tv_mysql_config_ip"
+        app:layout_constraintTop_toBottomOf="@id/iv_mysql_config_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="30dp"
+        android:hint="请输入连接主机的IP地址"
+        android:singleLine="true"/>
+
+    <TextView
+        android:id="@+id/tv_mysql_config_user"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="用户名："
+        android:textColor="#222222"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_mysql_config_ip"
+        android:layout_marginStart="30dp"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/et_mysql_config_user"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/tv_mysql_config_user"
+        app:layout_constraintTop_toBottomOf="@id/tv_mysql_config_ip"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="30dp"
+        android:hint="请输入连接的MySql用户名"
+        android:singleLine="true"/>
+
+    <TextView
+        android:id="@+id/tv_mysql_config_password"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="密码："
+        android:textColor="#222222"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_mysql_config_user"
+        android:layout_marginStart="30dp"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/et_mysql_config_password"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/tv_mysql_config_password"
+        app:layout_constraintTop_toBottomOf="@id/tv_mysql_config_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="30dp"
+        android:hint="请输入连接的MySql密码"
+        android:singleLine="true"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/btn_mysql_config_apply"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_mysql_config_password"
+        android:text="应用配置"/>
+
+</android.support.constraint.ConstraintLayout>

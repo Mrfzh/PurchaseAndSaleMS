@@ -15,6 +15,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     private static final String TAG = "MainActivity";
 
+    private Button mMySqlConfigBtn;
     private Button mLoginBtn;
     private Button mRegisterBtn;
     private Button mSwitchUserBtn;
@@ -40,6 +41,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void initView() {
+        mMySqlConfigBtn = findViewById(R.id.btn_main_mysql_config);
+        mMySqlConfigBtn.setOnClickListener(this);
         mLoginBtn = findViewById(R.id.btn_main_login);
         mLoginBtn.setOnClickListener(this);
         mRegisterBtn = findViewById(R.id.btn_main_register);
@@ -81,6 +84,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_main_mysql_config:
+                jumpToNewActivity(MysqlConfigActivity.class);
+                break;
             case R.id.btn_main_login:
                 // 登录
                 if (UserInfo.getUser() != null) {

@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".app.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.SaleAlterActivity"></activity>
+        <activity android:name=".view.MysqlConfigActivity"></activity>
+        <activity android:name=".view.SaleAlterActivity" />
         <activity android:name=".view.SaleInsertActivity" />
         <activity android:name=".view.SaleActivity" />
         <activity android:name=".view.StockAlterActivity" />

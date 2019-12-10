@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".view.MainActivity">
 
+    <Button
+        android:id="@+id/btn_main_mysql_config"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="配置 MYSQL"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <!-- 用户 -->
 
     <TextView
@@ -14,7 +23,7 @@
         android:layout_height="45dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_main_mysql_config"
         android:text="用户"
         android:textColor="#666666"
         android:textSize="20sp"

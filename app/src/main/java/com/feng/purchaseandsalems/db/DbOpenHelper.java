@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.feng.purchaseandsalems.constant.MySqlConfig;
 import com.feng.purchaseandsalems.constant.UserInfo;
 import com.feng.purchaseandsalems.entity.User;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
@@ -21,10 +22,7 @@ public class DbOpenHelper {
     private static final String TAG = "DbOpenHelper";
 
     private static String driver = "com.mysql.jdbc.Driver";// mysql 驱动
-    private static String ip = "192.168.43.4";  // 安装了 mysql 的电脑的 ip 地址
     private static String dbName = "Purchase_And_Sale";    // 要连接的数据库
-    private static String url = "jdbc:mysql://" + ip + ":3306/" + dbName
-            + "?useUnicode=true&characterEncoding=utf8";    // mysql 数据库连接 url
 
     private static Connection sMainConnection;
     private static Connection sConnection;
@@ -36,7 +34,9 @@ public class DbOpenHelper {
         if (sMainConnection == null) {
             try {
                 Class.forName(driver);  // 获取 mysql 驱动
-                sMainConnection = DriverManager.getConnection(url, "root", "Aa123#");   // 获取连接
+                String url = "jdbc:mysql://" + MySqlConfig.ip + ":3306/" + dbName
+                        + "?useUnicode=true&characterEncoding=utf8";
+                sMainConnection = DriverManager.getConnection(url, MySqlConfig.user, MySqlConfig.passWord);   // 获取连接
             } catch (ClassNotFoundException e) {
                 Log.d(TAG, "ClassNotFoundException: " + e.getMessage());
                 e.printStackTrace();
@@ -62,6 +62,8 @@ public class DbOpenHelper {
 
                 try {
                     Class.forName(driver);  // 获取 mysql 驱动
+                    String url = "jdbc:mysql://" + MySqlConfig.ip + ":3306/" + dbName
+                            + "?useUnicode=true&characterEncoding=utf8";
                     sConnection = DriverManager.getConnection(url, user, password);   // 获取连接
                 } catch (ClassNotFoundException e) {
                     Log.d(TAG, "ClassNotFoundException: " + e.getMessage());
@@ -79,8 +81,13 @@ public class DbOpenHelper {
                 }
 
                 if (sConnection != null) {
+                    Connection mainConnection = DbOpenHelper.getMainConnection();
+                    if (mainConnection == null) {
+                        loginListener.loginError("连接数据库失败");
+                        return;
+                    }
                     // 获取用户类型
-                    String type = DbOperation.getUserType(getMainConnection(), user);
+                    String type = DbOperation.getUserType(mainConnection, user);
                     if (type.equals("")) {
                         loginListener.loginError("连接数据库失败");
                         return;
